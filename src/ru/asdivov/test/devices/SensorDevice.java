@@ -4,6 +4,10 @@ import ru.asdivov.test.model.OutputDevice;
 
 public class SensorDevice extends OutputDevice {
 
+    public SensorDevice(String name) {
+        super(name);
+    }
+
     @Override
     public void outlet() {
         setI((int) Math.round(Math.random() * 100));

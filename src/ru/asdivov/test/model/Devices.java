@@ -10,7 +10,6 @@ public class Devices {
     private List<OutputDevice> outputDevices;
     private Map<InputDevice, OutputDevice> connectionMap;
 
-
     public List<InputDevice> getInputDevices() {
         return inputDevices;
     }

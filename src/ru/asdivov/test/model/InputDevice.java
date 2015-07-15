@@ -7,6 +7,17 @@ import java.util.Observer;
 
 public abstract class InputDevice implements Observer, Device {
 
+    private String name;
+
+    public InputDevice(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public abstract void processing(Observable o, Object arg);
 
     @Override

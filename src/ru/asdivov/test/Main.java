@@ -3,6 +3,7 @@ package ru.asdivov.test;
 import ru.asdivov.test.devices.DisplayDevice;
 import ru.asdivov.test.devices.SensorDevice;
 import ru.asdivov.test.model.Devices;
+import ru.asdivov.test.model.interfaces.Device;
 
 import java.util.Scanner;
 
@@ -10,23 +11,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean isRuning = false;
+        boolean isRuning = true;
 
         Devices devices = new Devices();
-        devices.add(new SensorDevice());
-        devices.add(new DisplayDevice());
 
-        devices.connectDevices(devices.getOutputDevices().get(0), devices.getInputDevices().get(0));
-        devices.runAll();
-
-        devices.disconnectDevices(devices.getInputDevices().get(0));
-        devices.runAll();
-
-        devices.remove(devices.getInputDevices().get(0));
-        devices.remove(devices.getOutputDevices().get(0));
-
-
-        System.out.println("Enter command : ");
+        System.out.println("Enter commands : ");
         while (isRuning) {
 
             System.out.print("#: ");
@@ -38,12 +27,36 @@ public class Main {
 
             switch (sCommand) {
                 case "run":
-                    //sensorDevice.run();
+                    devices.runAll();
                     break;
 
                 case "stop":
-                    //sensorDevice.stop();
+                    devices.stopAll();
                     break;
+
+                case "add in":
+                    devices.add(new DisplayDevice("Display " + String.valueOf(Math.round(Math.random()*1000))));
+                    break;
+
+                case "add out":
+                    devices.add(new SensorDevice("Sensor " + String.valueOf(Math.round(Math.random()*1000))));
+                    break;
+
+                case "list in": {
+                    int i = 0;
+                    for (Device device : devices.getInputDevices()) {
+                        System.out.println("Dev# " + i++ + " | " + device.getName());
+                    }
+                    break;
+                }
+
+                case "list out": {
+                    int i = 0;
+                    for (Device device : devices.getOutputDevices()) {
+                        System.out.println("Dev# " + i++ + " | " + device.getName());
+                    }
+                    break;
+                }
 
                 case "exit":
                     isRuning = false;

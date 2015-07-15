@@ -8,6 +8,10 @@ import java.util.Observable;
 
 public class DisplayDevice extends InputDevice {
 
+    public DisplayDevice(String name) {
+        super(name);
+    }
+
     @Override
     public void processing(Observable o, Object arg) {
 

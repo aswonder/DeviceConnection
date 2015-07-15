@@ -8,5 +8,6 @@ public interface Device {
     public static final int INPUT_OUTPUT_DEVICE = 2;
 
     public int getTypeDevice();
+    public String getName();
 
 }

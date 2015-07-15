@@ -8,6 +8,21 @@ public abstract class OutputDevice extends Observable implements Device {
 
     private int i = 0;
     private boolean isRuning = false;
+    private String name;
+
+    public OutputDevice(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getTypeDevice() {
+        return Device.OUTPUT_DEVICE;
+    }
 
     public abstract void outlet();
 
@@ -38,9 +53,5 @@ public abstract class OutputDevice extends Observable implements Device {
         isRuning = false;
     }
 
-    @Override
-    public int getTypeDevice() {
-        return Device.OUTPUT_DEVICE;
-    }
 
 }
