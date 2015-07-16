@@ -19,8 +19,8 @@ public class Devices {
     }
 
 
-    public List<InputDevice> getInputDevices() {
-        List<InputDevice> list = new ArrayList<>();
+    public List<Device> getInputDevices() {
+        List<Device> list = new ArrayList<>();
         for (Device device : devices) {
             if (device.getTypeDevice() == Device.INPUT_DEVICE) {
                 list.add((InputDevice) device);
@@ -30,8 +30,8 @@ public class Devices {
     }
 
 
-    public List<OutputDevice> getOutputDevices() {
-        List<OutputDevice> list = new ArrayList<>();
+    public List<Device> getOutputDevices() {
+        List<Device> list = new ArrayList<>();
         for (Device device : devices) {
             if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
                 list.add((OutputDevice) device);
@@ -64,15 +64,17 @@ public class Devices {
 
 
     public void runAll() {
-        for (OutputDevice device : getOutputDevices()) {
-            device.run();
+        for (Device device : getOutputDevices()) {
+            OutputDevice deviceOut = (OutputDevice) device;
+            deviceOut.run();
         }
     }
 
 
     public void stopAll() {
-        for (OutputDevice device : getOutputDevices()) {
-            device.stop();
+        for (Device device : getOutputDevices()) {
+            OutputDevice deviceOut = (OutputDevice) device;
+            deviceOut.stop();
         }
     }
 
