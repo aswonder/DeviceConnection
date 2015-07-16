@@ -10,42 +10,36 @@ public class Commands {
  public static boolean execute (Devices devices, String command) {
     boolean result = true;
 
-     switch (command) {
-         case "run":
-             devices.runAll();
-             break;
-
-         case "stop":
-             devices.stopAll();
-             break;
-
-         case "add in":
+     if (command.contains("run")) {
+         devices.runAll();
+     }
+     else if (command.contains("stop")) {
+         devices.stopAll();
+     }
+     else if (command.contains("add")) {
+         if (command.contains("in")) {
              devices.add(new DisplayDevice("Display " + String.valueOf(Math.round(Math.random()*1000))));
-             break;
-
-         case "add out":
+         }
+         else if (command.contains("out")) {
              devices.add(new SensorDevice("Sensor " + String.valueOf(Math.round(Math.random()*1000))));
-             break;
-
-         case "list in": {
+         }
+     }
+     else if (command.contains("list")) {
+         if (command.contains("in")) {
              int i = 0;
              for (Device device : devices.getInputDevices()) {
                  System.out.println("Dev# " + i++ + " | " + device.getName());
              }
-             break;
          }
-
-         case "list out": {
+         else if (command.contains("out")) {
              int i = 0;
              for (Device device : devices.getOutputDevices()) {
                  System.out.println("Dev# " + i++ + " | " + device.getName());
              }
-             break;
          }
-
-         case "exit":
-             result = false;
-             break;
+     }
+     else if (command.contains("exit")) {
+         result = false;
      }
 
      return result;
