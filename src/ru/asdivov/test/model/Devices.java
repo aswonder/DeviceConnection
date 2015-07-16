@@ -10,6 +10,12 @@ public class Devices {
     private Map<InputDevice, OutputDevice> connectionMap;
 
 
+    public Devices() {
+        devices = new ArrayList<>();
+        connectionMap = new HashMap<InputDevice, OutputDevice>();
+    }
+
+
     public List<Device> getDevices() {
         List<Device> list = new ArrayList<>();
         for (Device device : devices) {
@@ -42,12 +48,6 @@ public class Devices {
 
     public Map<InputDevice, OutputDevice> getConnectionMap() {
         return connectionMap;
-    }
-
-
-    public Devices() {
-        devices = new ArrayList<>();
-        connectionMap = new HashMap<InputDevice, OutputDevice>();
     }
 
 
