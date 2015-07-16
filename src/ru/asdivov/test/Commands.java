@@ -12,7 +12,7 @@ public class Commands {
     public static void printDeviceList(List<Device> deviceList) {
         int i = 0;
         for (Device device : deviceList) {
-            System.out.println("Dev# " + i++ + device.toString());
+            System.out.println("Dev# " + i++ + " " + device.toString());
         }
     }
 
