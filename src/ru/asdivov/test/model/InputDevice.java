@@ -9,8 +9,15 @@ public abstract class InputDevice implements Observer, Device {
 
     private String name;
 
+    public abstract void processing(Observable o, Object arg);
+
     public InputDevice(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + getName() + " | Type: " + getTypeDevice() ;
     }
 
     @Override
@@ -18,7 +25,6 @@ public abstract class InputDevice implements Observer, Device {
         return name;
     }
 
-    public abstract void processing(Observable o, Object arg);
 
     @Override
     public void update(Observable o, Object arg) {

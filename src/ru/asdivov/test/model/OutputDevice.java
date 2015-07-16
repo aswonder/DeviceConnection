@@ -10,6 +10,8 @@ public abstract class OutputDevice extends Observable implements Device {
     private boolean isRuning = false;
     private String name;
 
+    public abstract void outlet();
+
     public OutputDevice(String name) {
         this.name = name;
     }
@@ -24,7 +26,10 @@ public abstract class OutputDevice extends Observable implements Device {
         return Device.OUTPUT_DEVICE;
     }
 
-    public abstract void outlet();
+    @Override
+    public String toString() {
+        return "Name: " + getName() + " | Type: " + getTypeDevice() ;
+    }
 
     public int getI() {
         return i;
