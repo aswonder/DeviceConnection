@@ -6,19 +6,29 @@ import java.util.*;
 
 public class Devices {
 
-    private List<InputDevice> inputDevices;
-    private List<OutputDevice> outputDevices;
+    private List<Device> devices;
     private Map<InputDevice, OutputDevice> connectionMap;
 
     public List<InputDevice> getInputDevices() {
-        return inputDevices;
+        List<InputDevice> list = new ArrayList<>();
+        for (Device device : devices) {
+            if (device.getTypeDevice() == Device.INPUT_DEVICE) {
+                list.add((InputDevice) device);
+            }
+        }
+        return list;
     }
 
 
     public List<OutputDevice> getOutputDevices() {
-        return outputDevices;
+        List<OutputDevice> list = new ArrayList<>();
+        for (Device device : devices) {
+            if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
+                list.add((OutputDevice) device);
+            }
+        }
+        return list;
     }
-
 
     public Map<InputDevice, OutputDevice> getConnectionMap() {
         return connectionMap;
@@ -26,75 +36,60 @@ public class Devices {
 
 
     public Devices() {
-        inputDevices = new ArrayList<InputDevice>();
-        outputDevices = new ArrayList<OutputDevice>();
+        devices = new ArrayList<>();
         connectionMap = new HashMap<InputDevice, OutputDevice>();
     }
 
 
     public void add(Device device) {
-        switch (device.getTypeDevice()) {
-            case Device.INPUT_DEVICE:
-                inputDevices.add((InputDevice) device);
-                break;
-            case Device.OUTPUT_DEVICE:
-                outputDevices.add((OutputDevice) device);
-                break;
-        }
+        devices.add(device);
     }
 
 
     public void remove(Device device) {
-        switch (device.getTypeDevice()) {
-            case Device.INPUT_DEVICE:
-                disconnectDevices((InputDevice) device);
-                inputDevices.remove((InputDevice) device);
-                break;
-            case Device.OUTPUT_DEVICE:
-                disconnectDevices((OutputDevice) device);
-                outputDevices.remove((OutputDevice) device);
-                break;
-        }
+        disconnectDevices(device);
+        if (devices.contains(device))
+            devices.remove(device);
     }
 
 
     public void runAll() {
-        for(OutputDevice device : outputDevices) {
+        for (OutputDevice device : getOutputDevices()) {
             device.run();
         }
     }
 
 
     public void stopAll() {
-        for(OutputDevice device : outputDevices) {
+        for (OutputDevice device : getOutputDevices()) {
             device.stop();
         }
     }
 
 
-    public void connectDevices (OutputDevice outputDevice, InputDevice inputDevice) {
+    public void connectDevices(OutputDevice outputDevice, InputDevice inputDevice) {
         outputDevice.addObserver(inputDevice);
         connectionMap.put(inputDevice, outputDevice);
     }
 
 
-    public void disconnectDevices (InputDevice inputDevice) {
-        OutputDevice outputDevice = connectionMap.get(inputDevice);
+    public void disconnectDevices(Device device) {
 
-        if (outputDevice != null) {
-            outputDevice.deleteObserver(inputDevice);
-            connectionMap.remove(inputDevice);
-        }
-    }
+        if (device.getTypeDevice() == Device.INPUT_DEVICE) {
+            OutputDevice outputDevice = connectionMap.get(device);
 
+            if (outputDevice != null) {
+                outputDevice.deleteObserver((InputDevice) device);
+                connectionMap.remove(device);
+            }
+        } else if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
 
-    public void disconnectDevices (OutputDevice outputDevice) {
-        InputDevice inputDevice;
-
-        for (Map.Entry<InputDevice, OutputDevice> entry : connectionMap.entrySet()) {
-            if (outputDevice.equals(entry.getValue())) {
-                inputDevice = entry.getKey();
-                disconnectDevices(inputDevice);
+            InputDevice inputDevice;
+            for (Map.Entry<InputDevice, OutputDevice> entry : connectionMap.entrySet()) {
+                if (device.equals(entry.getValue())) {
+                    inputDevice = entry.getKey();
+                    disconnectDevices(inputDevice);
+                }
             }
         }
     }
