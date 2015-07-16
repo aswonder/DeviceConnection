@@ -21,8 +21,9 @@ public class Commands {
              devices.add(new DisplayDevice("Display " + String.valueOf(Math.round(Math.random()*1000))));
          }
          else if (command.contains("out")) {
-             devices.add(new SensorDevice("Sensor " + String.valueOf(Math.round(Math.random()*1000))));
+             devices.add(new SensorDevice("Sensor " + String.valueOf(Math.round(Math.random() * 1000))));
          }
+
      }
      else if (command.contains("list")) {
          if (command.contains("in")) {
@@ -37,9 +38,18 @@ public class Commands {
                  System.out.println("Dev# " + i++ + " | " + device.getName());
              }
          }
+         else {
+             int i = 0;
+             for (Device device : devices.getDevices()) {
+                 System.out.println("Dev# " + i++ + " | Name: " + device.getName() + " | Type: " + device.getTypeDevice());
+             }
+         }
      }
      else if (command.contains("exit")) {
          result = false;
+     }
+     else {
+         System.out.println("Command not found");
      }
 
      return result;
