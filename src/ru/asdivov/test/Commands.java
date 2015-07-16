@@ -32,10 +32,15 @@ public class Commands {
             if (command.contains("in")) {
 
                 devices.add(new DisplayDevice("Display " + String.valueOf(Math.round(Math.random() * 1000))));
+                System.out.println("Input device added");
 
             } else if (command.contains("out")) {
 
                 devices.add(new SensorDevice("Sensor " + String.valueOf(Math.round(Math.random() * 1000))));
+                System.out.println("Output device added");
+            }
+            else {
+                System.out.println("Use parameters: [in], [out]");
             }
 
         } else if (command.contains("list")) {
