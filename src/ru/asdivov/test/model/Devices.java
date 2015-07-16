@@ -9,6 +9,16 @@ public class Devices {
     private List<Device> devices;
     private Map<InputDevice, OutputDevice> connectionMap;
 
+
+    public List<Device> getDevices() {
+        List<Device> list = new ArrayList<>();
+        for (Device device : devices) {
+                list.add(device);
+            }
+        return list;
+    }
+
+
     public List<InputDevice> getInputDevices() {
         List<InputDevice> list = new ArrayList<>();
         for (Device device : devices) {
