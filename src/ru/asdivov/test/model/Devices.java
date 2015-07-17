@@ -80,8 +80,13 @@ public class Devices {
 
 
     public void connectDevices(OutputDevice outputDevice, InputDevice inputDevice) {
-        outputDevice.addObserver(inputDevice);
-        connectionMap.put(inputDevice, outputDevice);
+
+        if (connectionMap.containsKey(inputDevice)) {
+            connectionMap.get(inputDevice).deleteObserver(inputDevice);
+            connectionMap.remove(inputDevice);
+        }
+            connectionMap.put(inputDevice, outputDevice);
+            outputDevice.addObserver(inputDevice);
     }
 
 
