@@ -85,6 +85,7 @@ public class Devices {
         if (getIndexOfConnectedOutputDevice(outputDevice) != -1) {
             if (!connectionList.get(getIndexOfConnectedOutputDevice(outputDevice)).getInputDeviceList().contains(inputDevice))
             connectionList.get(getIndexOfConnectedOutputDevice(outputDevice)).add(inputDevice);
+            outputDevice.addObserver(inputDevice);
         } else {
             connectionList.add(new Connection(outputDevice, inputDevice));
             outputDevice.addObserver(inputDevice);
