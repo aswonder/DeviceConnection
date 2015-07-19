@@ -7,12 +7,12 @@ import java.util.*;
 public class Devices {
 
     private List<Device> devices;
-    private Map<InputDevice, OutputDevice> connectionMap;
+    private List<Connection> connectionList;
 
 
     public Devices() {
         devices = new ArrayList<>();
-        connectionMap = new HashMap<InputDevice, OutputDevice>();
+        connectionList = new ArrayList<Connection>();
     }
 
 
@@ -46,8 +46,9 @@ public class Devices {
         return list;
     }
 
-    public Map<InputDevice, OutputDevice> getConnectionMap() {
-        return connectionMap;
+
+    public List<Connection> getConnectionList() {
+        return connectionList;
     }
 
 
@@ -81,11 +82,10 @@ public class Devices {
 
     public void connectDevices(OutputDevice outputDevice, InputDevice inputDevice) {
 
-        if (connectionMap.containsKey(inputDevice)) {
-            connectionMap.get(inputDevice).deleteObserver(inputDevice);
-            connectionMap.remove(inputDevice);
+        if (getIndexOfConnectedOutputDevice(outputDevice) >= 0) {
+            connectionList.get(getIndexOfConnectedOutputDevice(outputDevice)).add(inputDevice);
         }
-            connectionMap.put(inputDevice, outputDevice);
+            connectionList.add(new Connection(outputDevice, inputDevice));
             outputDevice.addObserver(inputDevice);
     }
 
@@ -93,23 +93,38 @@ public class Devices {
     public void disconnectDevices(Device device) {
 
         if (device.getTypeDevice() == Device.INPUT_DEVICE) {
-            OutputDevice outputDevice = connectionMap.get(device);
 
-            if (outputDevice != null) {
-                outputDevice.deleteObserver((InputDevice) device);
-                connectionMap.remove(device);
-            }
-        } else if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
-
-            InputDevice inputDevice;
-            for (Map.Entry<InputDevice, OutputDevice> entry : connectionMap.entrySet()) {
-                if (device.equals(entry.getValue())) {
-                    inputDevice = entry.getKey();
-                    disconnectDevices(inputDevice);
+            for (Connection connection: connectionList) {
+                if (connection.getInputDeviceList().contains((InputDevice) device)) {
+                    connection.getOutputDevice().deleteObserver((InputDevice) device);
+                    connection.getInputDeviceList().remove((InputDevice) device);
+                    if (connection.getInputDeviceList().size() == 0)
+                        connectionList.remove(connection);
                 }
             }
+
+        } else if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
+
+            int index = getIndexOfConnectedOutputDevice((OutputDevice) device);
+            List<InputDevice> list = connectionList.get(index).getInputDeviceList();
+
+            for (InputDevice inputDevice: list) {
+                ((OutputDevice) device).deleteObserver(inputDevice);
+            }
+            connectionList.remove(index);
         }
     }
 
+
+    private int getIndexOfConnectedOutputDevice(OutputDevice outputDevice) {
+        int result = -1;
+
+        for (Connection connection: connectionList) {
+            if (connection.getOutputDevice().equals(outputDevice))
+                result = connectionList.indexOf(connection);
+        }
+
+        return result;
+    }
 
 }
