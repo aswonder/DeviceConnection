@@ -82,11 +82,13 @@ public class Devices {
 
     public void connectDevices(OutputDevice outputDevice, InputDevice inputDevice) {
 
-        if (getIndexOfConnectedOutputDevice(outputDevice) >= 0) {
+        if (getIndexOfConnectedOutputDevice(outputDevice) != -1) {
+            if (!connectionList.get(getIndexOfConnectedOutputDevice(outputDevice)).getInputDeviceList().contains(inputDevice))
             connectionList.get(getIndexOfConnectedOutputDevice(outputDevice)).add(inputDevice);
-        }
+        } else {
             connectionList.add(new Connection(outputDevice, inputDevice));
             outputDevice.addObserver(inputDevice);
+        }
     }
 
 
