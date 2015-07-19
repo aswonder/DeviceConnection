@@ -97,14 +97,19 @@ public class Devices {
 
         if (device.getTypeDevice() == Device.INPUT_DEVICE) {
 
+            List<Connection> listToDel = new ArrayList<Connection>();
+
             for (Connection connection: connectionList) {
                 if (connection.getInputDeviceList().contains((InputDevice) device)) {
                     connection.getOutputDevice().deleteObserver((InputDevice) device);
                     connection.getInputDeviceList().remove((InputDevice) device);
                     if (connection.getInputDeviceList().size() == 0)
-                        connectionList.remove(connection);
+                        listToDel.add(connection);
                 }
             }
+
+            for (Connection connection: listToDel)
+                connectionList.remove(connection);
 
         } else if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
 
