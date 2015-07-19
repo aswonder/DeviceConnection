@@ -10,7 +10,9 @@ public class SensorDevice extends OutputDevice {
 
     @Override
     public void outlet() {
-        setI((int) Math.round(Math.random() * 100));
+        //setI((int) Math.round(Math.random() * 100));
+        //  Debug
+        setI(Integer.parseInt(this.getName()));
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {

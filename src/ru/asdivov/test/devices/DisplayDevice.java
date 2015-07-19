@@ -17,6 +17,8 @@ public class DisplayDevice extends InputDevice {
 
         int i = ((OutputDevice) o).getI();
 
-        System.out.println(i);
+        //System.out.println(i);
+        //  Debug
+        System.out.println("Display # " + this.getName() + " | Message: " + i);
     }
 }

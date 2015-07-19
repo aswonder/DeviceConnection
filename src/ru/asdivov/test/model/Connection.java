@@ -41,7 +41,7 @@ public class Connection {
 
     @Override
     public String toString() {
-        return outputDevice.toString() + " --> " + inputDeviceList.toString();
+        return outputDevice.toString() + " --> " + inputDeviceList.toString() + "\r\n";
     }
 
 }
