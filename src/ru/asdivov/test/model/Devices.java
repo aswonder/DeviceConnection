@@ -11,13 +11,13 @@ public class Devices {
 
 
     public Devices() {
-        devices = new ArrayList<>();
+        devices = new ArrayList<Device>();
         connectionList = new ArrayList<Connection>();
     }
 
 
     public List<Device> getDevices() {
-        List<Device> list = new ArrayList<>();
+        List<Device> list = new ArrayList<Device>();
         for (Device device : devices) {
                 list.add(device);
             }
@@ -26,7 +26,7 @@ public class Devices {
 
 
     public List<Device> getInputDevices() {
-        List<Device> list = new ArrayList<>();
+        List<Device> list = new ArrayList<Device>();
         for (Device device : devices) {
             if (device.getTypeDevice() == Device.INPUT_DEVICE) {
                 list.add((InputDevice) device);
@@ -37,7 +37,7 @@ public class Devices {
 
 
     public List<Device> getOutputDevices() {
-        List<Device> list = new ArrayList<>();
+        List<Device> list = new ArrayList<Device>();
         for (Device device : devices) {
             if (device.getTypeDevice() == Device.OUTPUT_DEVICE) {
                 list.add((OutputDevice) device);
